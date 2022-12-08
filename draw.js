@@ -2,20 +2,11 @@ class Viewer {
   static SCALE = 10;
   static SIZE = { WIDTH: 1000, HEIGHT: 250 };
 
-  constructor() {
-    this.counter = document.getElementById("counter");
-
-    let canvas = document.createElement("canvas");
-    canvas.width = Viewer.SIZE.WIDTH;
-    canvas.height = Viewer.SIZE.HEIGHT;
-    this.context = canvas.getContext("2d");
-    let node = document.getElementById("canvas");
-    node.appendChild(canvas);
+  constructor(context) {
+    this.context = context;
   }
 
   draw(field) {
-    this.counter.innerText = field.count;
-
     // 全体の設定
     this.context.textAlign = "center";
     this.context.textBaseline = "middle";
@@ -62,7 +53,7 @@ class Viewer {
     this.context.fill();
     this.context.fillStyle = "#000000";
     this.context.fillText(
-      "m = " + field.cubes[0].mass.toFixed(1),
+      "m = " + field.cubes[0].mass.toFixed(1) + " kg",
       field.cubes[0].x * Viewer.SCALE,
       Viewer.SIZE.HEIGHT -
         0.5 * field.cubes[0].length * Viewer.SCALE -
@@ -70,14 +61,14 @@ class Viewer {
         20
     );
     this.context.fillText(
-      "x = " + field.cubes[0].x.toFixed(1),
+      "x = " + field.cubes[0].x.toFixed(1) + " m",
       field.cubes[0].x * Viewer.SCALE,
       Viewer.SIZE.HEIGHT -
         0.5 * field.cubes[0].length * Viewer.SCALE -
         0.5 * this.context.lineWidth
     );
     this.context.fillText(
-      "v = " + field.cubes[0].v.toFixed(1),
+      "v = " + field.cubes[0].v.toFixed(1) + " m/s",
       field.cubes[0].x * Viewer.SCALE,
       Viewer.SIZE.HEIGHT -
         0.5 * field.cubes[0].length * Viewer.SCALE -
@@ -111,7 +102,7 @@ class Viewer {
     this.context.fill();
     this.context.fillStyle = "#000000";
     this.context.fillText(
-      "M = " + field.cubes[1].mass.toFixed(1),
+      "M = " + field.cubes[1].mass.toFixed(1) + " kg",
       field.cubes[1].x * Viewer.SCALE,
       Viewer.SIZE.HEIGHT -
         0.5 * field.cubes[1].length * Viewer.SCALE -
@@ -119,14 +110,14 @@ class Viewer {
         20
     );
     this.context.fillText(
-      "v = " + field.cubes[1].x.toFixed(1),
+      "x = " + field.cubes[0].x.toFixed(1) + " m",
       field.cubes[1].x * Viewer.SCALE,
       Viewer.SIZE.HEIGHT -
         0.5 * field.cubes[1].length * Viewer.SCALE -
         0.5 * this.context.lineWidth
     );
     this.context.fillText(
-      "x = " + field.cubes[0].x.toFixed(1),
+      "v = " + field.cubes[1].x.toFixed(1) + " m/s",
       field.cubes[1].x * Viewer.SCALE,
       Viewer.SIZE.HEIGHT -
         0.5 * field.cubes[1].length * Viewer.SCALE -

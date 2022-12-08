@@ -1,29 +1,90 @@
 <html>
   <head>
     <title>Simulation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="./sim.js"></script>
     <script src="./draw.js"></script>
   </head>
   <body>
-    <div style="display: flex; flex-direction: column; align-items: center;">
-      <h1>Simulation</h1>
-      <p>積み木で円周率を計算する</p>
-      <div id="canvas"></div>
-      <h3>Count: <div id="counter">0</div></h3>
+    <div class="container mt-4">
+      <div class="row justify-content-md-center">
+        <div class="col-md-auto">
+          <div class="row">
+            <h1 class="display-6">Simulation: "Playing pool with PI" by G. Galperin</h1>
+          </div>
+          <div class="row">
+            <p>積み木で円周率を計算する</p>
+          </div>
+          <div class="row">
+            <canvas id="canvas"></canvas>
+          </div>
+          <div class="row justify-content-end text-end">
+            Count: <div id="counter" style="width: fit-content;">0</div> collisions.
+          </div>
+
+          <h3>Parameters</h3>
+          <div class="row">
+            <div class="input-group">
+              <span class="input-group-text">M = </span>
+              <input type="text" class="form-control" id="mass" value="100" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-text">正しく円周率を計算するには、2つの箱の比重は100のべき乗である必要があります。（M/m=100^n）</div>
+          </div>
+          <div class="row justify-content-md-center mt-4">
+            <button id="button" onClick="clickHandler()" class="btn btn-outline-primary btn-lg col-3">Start</button>
+          </div>
+        </div>
+      </div>
     </div>
     <script>
-      this.cubeL = new Cube(1.0, 10.0, 50.0, 0.0);
-      this.cubeR = new Cube(Math.pow(100, 2), 15.0, 80.0, -8.0);
-      const sim = new Simulation([this.cubeL, this.cubeR], 0.01);
-      const viewer = new Viewer();
+      let sim;
+      let viewer;
+      let isProcess = false;
+      let mass;
+      let counter;
+
+      function init() {
+        mass = parseInt(document.getElementById("mass").value);
+        cubeL = new Cube(1.0, 10.0, 50.0, 0.0);
+        cubeR = new Cube(mass, 15.0, 80.0, -8.0);
+        sim = new Simulation([cubeL, cubeR], 0.01);
+
+        counter = document.getElementById("counter");
+        let canvas = document.getElementById("canvas");
+        canvas.width = Viewer.SIZE.WIDTH;
+        canvas.height = Viewer.SIZE.HEIGHT;
+        let context = canvas.getContext("2d");
+        viewer = new Viewer(context);
+
+        window.requestAnimationFrame(loop);
+      }
+      init();
 
       function loop() {
         sim.run();
         viewer.draw(sim.field);
-        window.requestAnimationFrame(loop);
+        counter.innerText = sim.field.count;
+        if (isProcess) {
+          window.requestAnimationFrame(loop);
+        }
       }
 
-      window.requestAnimationFrame(loop);
+      function clickHandler() {
+        let button = document.getElementById("button");
+        console.log(isProcess);
+        if (isProcess) {
+          isProcess = false;
+          button.innerText = "Start";
+        } else {
+          isProcess = true;
+          button.innerText = "Stop";
+          init();
+        }
+
+      }
     </script>
   </body>
 </html>
