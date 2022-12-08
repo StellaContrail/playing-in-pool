@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title>Simulation</title>
+    <script src="./sim.js"></script>
+    <script src="./draw.js"></script>
+  </head>
+  <body>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <h1>Simulation</h1>
+      <p>積み木で円周率を計算する</p>
+      <div id="canvas"></div>
+      <h3>Count: <div id="counter">0</div></h3>
+    </div>
+    <script>
+      this.cubeL = new Cube(1.0, 10.0, 50.0, 0.0);
+      this.cubeR = new Cube(Math.pow(100, 2), 15.0, 80.0, -8.0);
+      const sim = new Simulation([this.cubeL, this.cubeR], 0.01);
+      const viewer = new Viewer();
+
+      function loop() {
+        sim.run();
+        viewer.draw(sim.field);
+        window.requestAnimationFrame(loop);
+      }
+
+      window.requestAnimationFrame(loop);
+    </script>
+  </body>
+</html>
