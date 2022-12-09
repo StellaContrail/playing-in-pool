@@ -110,14 +110,14 @@ class Viewer {
         20
     );
     this.context.fillText(
-      "x = " + field.cubes[0].x.toFixed(1) + " m",
+      "x = " + field.cubes[1].x.toFixed(1) + " m",
       field.cubes[1].x * Viewer.SCALE,
       Viewer.SIZE.HEIGHT -
         0.5 * field.cubes[1].length * Viewer.SCALE -
         0.5 * this.context.lineWidth
     );
     this.context.fillText(
-      "v = " + field.cubes[1].x.toFixed(1) + " m/s",
+      "v = " + field.cubes[1].v.toFixed(1) + " m/s",
       field.cubes[1].x * Viewer.SCALE,
       Viewer.SIZE.HEIGHT -
         0.5 * field.cubes[1].length * Viewer.SCALE -
